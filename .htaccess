@@ -1,0 +1,72 @@
+# =========================================
+#       MAHATO ONLINE CENTER
+#       APACHE CONFIGURATION
+# =========================================
+
+
+# Enable Rewrite Engine
+RewriteEngine On
+
+
+
+# =========================================
+# REMOVE PHP EXTENSION FROM URL
+# =========================================
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+
+
+# =========================================
+# DISABLE DIRECTORY LISTING
+# =========================================
+
+Options -Indexes
+
+
+
+# =========================================
+# PROTECT IMPORTANT FILES
+# =========================================
+
+<FilesMatch "\.(sql|config|ini|log)$">
+
+    Order allow,deny
+    Deny from all
+
+</FilesMatch>
+
+
+
+# =========================================
+# CUSTOM ERROR PAGE
+# =========================================
+
+ErrorDocument 404 /Mahato-Online-Center/404.php
+
+
+
+# =========================================
+# SECURITY HEADERS
+# =========================================
+
+<IfModule mod_headers.c>
+
+Header set X-Content-Type-Options "nosniff"
+
+Header set X-Frame-Options "SAMEORIGIN"
+
+Header set X-XSS-Protection "1; mode=block"
+
+</IfModule>
+
+
+
+# =========================================
+# DEFAULT INDEX FILE
+# =========================================
+
+DirectoryIndex index.php
